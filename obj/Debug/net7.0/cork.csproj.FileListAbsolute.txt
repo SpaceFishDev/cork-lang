@@ -1,0 +1,15 @@
+/home/liamgatter/dev/C#/cork/bin/Debug/net7.0/cork
+/home/liamgatter/dev/C#/cork/bin/Debug/net7.0/cork.deps.json
+/home/liamgatter/dev/C#/cork/bin/Debug/net7.0/cork.runtimeconfig.json
+/home/liamgatter/dev/C#/cork/bin/Debug/net7.0/cork.dll
+/home/liamgatter/dev/C#/cork/bin/Debug/net7.0/cork.pdb
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.csproj.AssemblyReference.cache
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.GeneratedMSBuildEditorConfig.editorconfig
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.AssemblyInfoInputs.cache
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.AssemblyInfo.cs
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.csproj.CoreCompileInputs.cache
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.dll
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/refint/cork.dll
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.pdb
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/cork.genruntimeconfig.cache
+/home/liamgatter/dev/C#/cork/obj/Debug/net7.0/ref/cork.dll
