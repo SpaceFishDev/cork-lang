@@ -238,44 +238,8 @@
         private string GetPrtStrSingle(object obj)
         {
             string output = "";
-            if (obj == null)
-            {
-                return "null";
-            }
-
-            if (obj.GetType().Name == (new Instruction(InstructionType.call, new List<object>())).GetType().Name)
-            {
-                object value = GetValue(obj);
-                output += GetPrtStrSingle(value);
-                return output;
-            }
-            string o = GetStr(obj);
-            if (obj.ToString() == "true" || obj.ToString() == "false")
-            {
-                return o;
-            }
-            if (o.Length == 0)
-            {
-                return "null";
-            }
-            if (o.StartsWith('"'))
-            {
-                output += o.Replace("\"", "");
-            }
-            else if (char.IsDigit(o[0]))
-            {
-                output += o;
-            }
-            else if (o[0] == '[')
-            {
-                output += o;
-            }
-            else
-            {
-                object value = GetValue(o);
-                output += GetPrtStrSingle(value);
-            }
-            return output;
+            output = GetStr(GetValue(obj));
+            return (output == null) ? "null" : output.Replace("\"", "");
         }
         private string GetPrtStr(List<object> Arguments)
         {
@@ -345,7 +309,6 @@
                         object val = GetValue(Arguments[0]);
                         string str = GetStr(val);
                         bool isNum = int.TryParse(str, out int res);
-                        Console.WriteLine(int.TryParse(str, out _));
                         if (isNum)
                         {
                             if (res > 0)

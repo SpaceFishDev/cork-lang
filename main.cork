@@ -1,3 +1,1 @@
-bool x = (1 x)cmp;
-n = 1;
-main = ((n)to_bool)println;
+main = ("Hello world") println;
