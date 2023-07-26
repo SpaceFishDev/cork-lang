@@ -1,1 +1,2 @@
-main = ("Hello world") println;
+xyz = ['t''e''s''t']{};
+main = ([xyz xyz]{})return;

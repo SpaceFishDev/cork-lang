@@ -235,13 +235,53 @@
             }
             return null;
         }
+        private List<object> ResolveList(List<object> ls)
+        {
+            List<object> end = new();
+            foreach (object obj in ls)
+            {
+                if (obj.GetType().Name == (new List<object>()).GetType().Name)
+                {
+                    end.Add(ResolveList((List<object>)obj));
+                }
+                else
+                {
+                    bool isDouble = double.TryParse(obj.ToString(), out var d);
+                    if (isDouble)
+                    {
+                        end.Add(d);
+                    }
+                    else
+                    {
+                        if (obj.ToString().StartsWith("\""))
+                        {
+                            end.Add(obj.ToString());
+                        }
+                        else
+                        {
+                            end.Add(GetValue(obj));
+                        }
+                    }
+                }
+            }
+            return end;
+        }
         private string GetPrtStrSingle(object obj)
         {
             string output = "";
+            if (obj == null)
+            {
+                return "null";
+            }
+            if (obj.GetType().Name == (new Instruction(0, new())).GetType().Name)
+            {
+                ExecuteInstruction((Instruction)obj);
+                return GetPrtStrSingle(ReturnObject);
+            }
             output = GetStr(GetValue(obj));
             return (output == null) ? "null" : output.Replace("\"", "");
         }
-        private string GetPrtStr(List<object> Arguments)
+        public string GetPrtStr(List<object> Arguments)
         {
             string output = "";
             foreach (object obj in Arguments)
@@ -271,7 +311,7 @@
             }
             if (v.GetType().Name == (new List<object>()).GetType().Name)
             {
-                return GetValue(((List<object>)v)[0]);
+                return ResolveList((List<object>)v);
             }
             if (v.GetType().Name == (new Instruction(InstructionType.call, new List<object>())).GetType().Name)
             {
@@ -346,11 +386,8 @@
                     }
                 case "return":
                     {
-                        if (visitor.Instructions[Position + 1].Opcode == InstructionType.ret)
-                        {
-                            ReturnObject = GetValue(Arguments[0]);
-                        }
-                        return GetValue(Arguments[0]);
+                        ReturnObject = GetValue(Arguments[0]);
+                        return ReturnObject;
                     }
                 case "print":
                     {
@@ -512,14 +549,31 @@
         static void Main(string[] Args)
         {
             string mainFile = "main.cork";
-            if (Args.Length != 0)
+            bool PrintReturn = true;
+            if (Args.Length > 1)
             {
-                mainFile = Args[0];
+                for (int i = 0; i < Args.Length; ++i)
+                {
+                    if (Args[i].StartsWith("fi="))
+                    {
+                        mainFile = Args[i].Replace("fi=", "");
+                    }
+                    if (Args[i] == "--ro")
+                    {
+                        PrintReturn = true;
+                    }
+                }
             }
             string inputFile = File.ReadAllText(mainFile);
             Interpreter interpreter = new(inputFile);
             Console.WriteLine("\nOutput:\n");
             interpreter.Interpret();
+            if (PrintReturn)
+            {
+                List<object> ls = new();
+                ls.Add(interpreter.ReturnObject);
+                Console.WriteLine(interpreter.GetPrtStr(ls));
+            }
         }
     }
 }

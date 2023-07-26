@@ -93,7 +93,7 @@ namespace Cork
                             Next();
                         }
                         Next();
-                        return new Token(Line, StartColumn, Result, TokenType.@string);
+                        return new Token(Line, StartColumn, "\"" + Result + "\"", TokenType.@string);
                     }
                 case ',':
                     {
