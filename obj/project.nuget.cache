@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "farnUfoelet+FpL0gtBkKscfUK7DXHI+c1XfloR9N/rjkUMKOWqGds9MR5j60a6FbWEakTC3mac5DaWYQtLYKg==",
+  "dgSpecHash": "zZsrxu0ryITINUtUoEFtKyvipI+i6RfrhcsSoaMnr3kFsuLffwlHyrnmuMM22xfRBY6WRaS4/mXVsLwM1jVtMQ==",
   "success": true,
-  "projectFilePath": "/home/liamgatter/dev/C#/cork/cork.csproj",
+  "projectFilePath": "/home/liamgatter/dev/C#/cork-lang/cork.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -139,67 +139,71 @@ namespace Cork
                         {
                             if (current.Parent.Type == NodeType.call)
                             {
-                                if (current.Parent.Parent.Type == NodeType.call)
+                                if (current.nodeToken.Type != TokenType.comma)
                                 {
-                                    int idx = 0;
-                                    while (idx < Instructions[Instructions.Count - 1].Args.Count)
-                                    {
-                                        if (Instructions[Instructions.Count - 1].Args[idx].GetType().Name == (new Instruction(InstructionType.call, new List<object>())).GetType().Name)
-                                        {
-                                            if (((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args[0] == current.Parent.nodeToken.Text)
-                                            {
-                                                break;
-                                            }
-                                        }
-                                        ++idx;
-                                    }
-                                    switch (current.nodeToken.Type)
-                                    {
-                                        case TokenType.identifier:
-                                        case TokenType.number:
-                                            {
-                                                bool isNum = double.TryParse(current.nodeToken.Text, out double n);
-                                                if (isNum)
-                                                {
-                                                    ((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args.Add(n);
-                                                }
-                                                else
-                                                {
-                                                    ((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args.Add(current.nodeToken.Text);
-                                                }
-                                            }
-                                            break;
-                                        case TokenType.@string:
-                                            {
-                                                ((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args.Add("\"" + current.nodeToken.Text + "\"");
-                                            }
-                                            break;
-                                    }
 
-                                }
-                                else
-                                {
-                                    switch (current.nodeToken.Type)
+                                    if (current.Parent.Parent.Type == NodeType.call)
                                     {
-                                        case TokenType.identifier:
-                                        case TokenType.number:
+                                        int idx = 0;
+                                        while (idx < Instructions[Instructions.Count - 1].Args.Count)
+                                        {
+                                            if (Instructions[Instructions.Count - 1].Args[idx].GetType().Name == (new Instruction(InstructionType.call, new List<object>())).GetType().Name)
                                             {
-                                                bool isNum = double.TryParse(current.nodeToken.Text, out double n);
-                                                if (isNum)
+                                                if (((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args[0] == current.Parent.nodeToken.Text)
                                                 {
-                                                    Instructions[Instructions.Count - 1].Args.Add(n);
-                                                }
-                                                else
-                                                {
-                                                    Instructions[Instructions.Count - 1].Args.Add(current.nodeToken.Text);
+                                                    break;
                                                 }
                                             }
-                                            break;
-                                        case TokenType.@string:
-                                            {
-                                                Instructions[Instructions.Count - 1].Args.Add("\"" + current.nodeToken.Text + "\"");
-                                            }
-                                            break;
+                                            ++idx;
+                                        }
+                                        switch (current.nodeToken.Type)
+                                        {
+                                            case TokenType.identifier:
+                                            case TokenType.number:
+                                                {
+                                                    bool isNum = double.TryParse(current.nodeToken.Text, out double n);
+                                                    if (isNum)
+                                                    {
+                                                        ((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args.Add(n);
+                                                    }
+                                                    else
+                                                    {
+                                                        ((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args.Add(current.nodeToken.Text);
+                                                    }
+                                                }
+                                                break;
+                                            case TokenType.@string:
+                                                {
+                                                    ((Instruction)Instructions[Instructions.Count - 1].Args[idx]).Args.Add("\"" + current.nodeToken.Text + "\"");
+                                                }
+                                                break;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        switch (current.nodeToken.Type)
+                                        {
+                                            case TokenType.identifier:
+                                            case TokenType.number:
+                                                {
+                                                    bool isNum = double.TryParse(current.nodeToken.Text, out double n);
+                                                    if (isNum)
+                                                    {
+                                                        Instructions[Instructions.Count - 1].Args.Add(n);
+                                                    }
+                                                    else
+                                                    {
+                                                        Instructions[Instructions.Count - 1].Args.Add(current.nodeToken.Text);
+                                                    }
+                                                }
+                                                break;
+                                            case TokenType.@string:
+                                                {
+                                                    Instructions[Instructions.Count - 1].Args.Add("\"" + current.nodeToken.Text + "\"");
+                                                }
+                                                break;
+                                        }
                                     }
                                 }
                             }

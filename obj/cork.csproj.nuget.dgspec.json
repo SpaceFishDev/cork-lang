@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/liamgatter/dev/C#/cork/cork.csproj": {}
+    "/home/liamgatter/dev/C#/cork-lang/cork.csproj": {}
   },
   "projects": {
-    "/home/liamgatter/dev/C#/cork/cork.csproj": {
+    "/home/liamgatter/dev/C#/cork-lang/cork.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/liamgatter/dev/C#/cork/cork.csproj",
+        "projectUniqueName": "/home/liamgatter/dev/C#/cork-lang/cork.csproj",
         "projectName": "cork",
-        "projectPath": "/home/liamgatter/dev/C#/cork/cork.csproj",
+        "projectPath": "/home/liamgatter/dev/C#/cork-lang/cork.csproj",
         "packagesPath": "/home/liamgatter/.nuget/packages/",
-        "outputPath": "/home/liamgatter/dev/C#/cork/obj/",
+        "outputPath": "/home/liamgatter/dev/C#/cork-lang/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/liamgatter/.nuget/NuGet/NuGet.Config"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.109/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.113/RuntimeIdentifierGraph.json"
         }
       }
     }

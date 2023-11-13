@@ -215,6 +215,13 @@ namespace Cork
                             Next();
                             while (!Is(TokenType.close_list))
                             {
+                                if(Is(TokenType.end_of_expr))
+                                {
+                                    pTokenizer.Errors.Add(new ErrInfo(1, "Never ending list!\n", Current.Line, Current.Column));
+                                    Next();
+                                    return ParsePrimary();
+                                }
+                                
                                 Node n = ParseConstOrId(ls);
                                 if (n != null)
                                 {
@@ -222,10 +229,12 @@ namespace Cork
                                 }
                                 Next();
                             }
-                            Expect(TokenType.open_size, true);
+                            if(Expect(TokenType.open_size, true)){
                             Next();
-                            Expect(TokenType.close_size, true);
+                            }
+                            if(Expect(TokenType.close_size, true)){
                             Next();
+                            }
                         }
                         return ls;
                     }

@@ -235,6 +235,30 @@
             }
             return null;
         }
+        private Obj? GetObject(string Name)
+        {
+            foreach (Obj o in Objects)
+            {
+                if (o.Exists && o.Name == Name)
+                {
+                    return o;
+                }
+            }
+            return null;
+        }
+        private int GetObjIndex(string Name)
+        {
+            int i = 0;
+            foreach (Obj o in Objects)
+            {
+                if (o.Exists && o.Name == Name)
+                {
+                    return i;
+                }
+                ++i;
+            }
+            return 0;
+        }
         private List<object> ResolveList(List<object> ls)
         {
             List<object> end = new();
@@ -313,13 +337,13 @@
             {
                 return ResolveList((List<object>)v);
             }
-            if (v.GetType().Name == (new Instruction(InstructionType.call, new List<object>())).GetType().Name)
+            if (v.GetType() == typeof(Instruction))
             {
                 var i = (Instruction)v;
                 ExecuteInstruction(i);
                 return ReturnObject;
             }
-            if (v.GetType().Name == ("").GetType().Name)
+            if (v.GetType() == typeof(string))
             {
                 if (v.ToString().StartsWith("\""))
                 {
@@ -340,6 +364,80 @@
             }
             switch (ins.Args[0].ToString())
             {
+                case "add":
+                    {
+                        var A = GetValue(Arguments[0]);
+                        var B = GetValue(Arguments[1]);
+                        if (A.GetType() == typeof(string))
+                        {
+                            return (string)A + GetStr(B);
+                        }
+                        if (A.GetType() == typeof(List<object>))
+                        {
+                            List<object> new_ls = (List<object>)A;
+                            new_ls.Add(GetValue(B));
+                            return new_ls;
+                        }
+                        if (A.GetType() == typeof(double))
+                        {
+                            if (B.GetType() != typeof(double))
+                            {
+                                return "\"" + A.ToString() + GetStr(B).Replace("\"", "") + "\"";
+                            }
+                            return (double)A + (double)B;
+                        }
+                    }
+                    break;
+                case "set":
+                    {
+                        if (!ObjectExists(ins.Args[1].ToString()))
+                        {
+                            return null;
+                        }
+
+                        int idxA = GetObjIndex(ins.Args[1].ToString());
+                        if (ObjectExists(ins.Args[2].ToString()))
+                        {
+                            int idxB = GetObjIndex(ins.Args[2].ToString());
+                            Obj obj = Objects[idxA];
+                            obj.Value = Objects[idxB].Value;
+                            Objects[idxA] = obj;
+                            return Objects[idxA].Value.Value;
+                        }
+                        else
+                        {
+                            object value = GetValue(ins.Args[2]);
+                            if (value != null)
+                            {
+                                if (value.GetType() == typeof(string))
+                                {
+                                    Obj newObj = Objects[idxA];
+                                    newObj.Value.Type = ValueType.@string;
+                                    newObj.Value.Value = value;
+                                    Objects[idxA] = newObj;
+                                    return newObj.Value.Value;
+                                }
+                                else if (value.GetType() == typeof(Instruction))
+                                {
+                                    ExecuteInstruction((Instruction)value);
+                                    Obj newObj = Objects[idxA];
+                                    newObj.Value.Type = GetObjType(GetValue(ReturnObject));
+                                    newObj.Value.Value = GetValue(ReturnObject);
+                                    Objects[idxA] = newObj;
+                                    return newObj.Value.Value;
+                                }
+                                else if (value.GetType() == typeof(double))
+                                {
+                                    Obj newObj = Objects[idxA];
+                                    newObj.Value.Type = ValueType.number;
+                                    newObj.Value.Value = value;
+                                    Objects[idxA] = newObj;
+                                    return newObj.Value.Value;
+                                }
+                            }
+                        }
+                    }
+                    break;
                 case "to_bool":
                     {
                         if (Arguments.Count != 1)
